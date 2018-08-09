@@ -16,12 +16,17 @@ class GameScene: SKScene {
     var bestScore : SKLabelNode!
     var playButton : SKShapeNode!
     var game : GameManager!
+    var currentScore : SKLabelNode!
+    var playerPosition : [(Int, Int)] = []
+    var gameBackGround : SKShapeNode!
+    var gameArray : [(node : SKShapeNode, row: Int, column: Int)] = []
     
     
         
     override func didMove(to view: SKView) {
         initializeMenu()
         game = GameManager()
+        initializeGameView()
     }
     
     
@@ -92,7 +97,66 @@ class GameScene: SKScene {
         
         // Moved best score to bottom middle
         let bottomMiddle = CGPoint(x: 0.0, y: -frame.size.height/2 + 20)
-        bestScore.run(SKAction.move(to: bottomMiddle, duration: 0.4))
+        bestScore.run(SKAction.move(to: bottomMiddle, duration: 0.4)){
+            self.gameBackGround.setScale(0)
+            self.currentScore.setScale(0)
+            self.gameBackGround.isHidden = false
+            self.currentScore.isHidden = false
+            self.gameBackGround.run(SKAction.scale(to: 1, duration: 0.4))
+            self.currentScore.run(SKAction.scale(to: 1, duration: 0.4))
+        }
+    }
+    
+    private func initializeGameView(){
+        // Create current score label
+        currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        currentScore.zPosition = 1
+        currentScore.position = CGPoint(x: 0.0, y: -frame.size.height/2 + 70)
+        currentScore.fontSize = 40
+        currentScore.isHidden = true
+        currentScore.text = "Current Score: 0"
+        currentScore.fontColor = UIColor.white
+        addChild(currentScore)
+        
+        // Create a shapenode to represent our game's playable area
+        let width = 550
+        let height = 1100
+        let rect = CGRect(x: -width/2, y: -height/2, width: width, height: height)
+        gameBackGround = SKShapeNode(rect: rect, cornerRadius: 0.02)
+        gameBackGround.fillColor = UIColor.lightGray
+        gameBackGround.zPosition = 2
+        gameBackGround.isHidden = true
+        addChild(gameBackGround)
+        
+        createGameBoard(width: width, height: height)
+    }
+    
+    private func createGameBoard(width: Int, height : Int){
+        let cellWidth : CGFloat = 27.5
+        let numOfRows = 40
+        let numOfColumns = 20
+        
+        /* Did not understand these two lines */
+        var x = CGFloat(-width/2) + (cellWidth/2)
+        var y = CGFloat(height/2) - (cellWidth/2)
+        
+        // Loop through the rows and columns to create cells
+        for row in 0..<numOfRows{
+            for column in 0..<numOfColumns{
+                let cellNode = SKShapeNode(rectOf: CGSize(width: cellWidth, height: cellWidth))
+                cellNode.strokeColor = UIColor.black
+                cellNode.zPosition = 2
+                cellNode.position = CGPoint(x: x, y: y)
+                // add array of cells -- then add to game board
+                gameArray.append((node: cellNode, row: row, column: column))
+                gameBackGround.addChild(cellNode)
+                
+                x += cellWidth
+            }
+            // Reset x and iterate y
+            x = CGFloat(width / -2) + (cellWidth / 2)
+            y -= cellWidth
+        }
     }
     
     
