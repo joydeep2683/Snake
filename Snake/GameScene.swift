@@ -41,10 +41,6 @@ class GameScene: SKScene {
         }
     }
     
-    private func startGame(){
-        print("start game")
-    }
-    
     
     func initializeMenu(){
         
@@ -81,4 +77,25 @@ class GameScene: SKScene {
         playButton.path = path
         addChild(playButton)
     }
+    
+    private func startGame(){
+        print("start game")
+        // Remove logo by animation
+        gameLogo.run(SKAction.move(by: CGVector(dx: 0.0, dy: 600.0), duration: 0.5)){
+            self.gameLogo.isHidden = true
+        }
+        
+        // Remove play button by animation
+        playButton.run(SKAction.scale(to: 0.0, duration: 0.3)){
+            self.playButton.isHidden = true
+        }
+        
+        // Moved best score to bottom middle
+        let bottomMiddle = CGPoint(x: 0.0, y: -frame.size.height/2 + 20)
+        bestScore.run(SKAction.move(to: bottomMiddle, duration: 0.4))
+    }
+    
+    
+    
+    
 }
