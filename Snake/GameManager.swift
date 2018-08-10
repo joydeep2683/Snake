@@ -11,6 +11,8 @@ import SpriteKit
 
 class GameManager {
     var scene : GameScene!
+    var nextTime : Double?
+    var timeExtension : Double = 1
     
     init(scene : GameScene) {
         self.scene = scene
@@ -41,5 +43,15 @@ class GameManager {
             }
         }
         return false
+    }
+    
+    func update(time : Double){
+        if nextTime == nil {
+            nextTime = time + timeExtension
+        } else if time >= nextTime! {
+            nextTime = time + timeExtension
+            print(time)
+        }
+        
     }
 }
