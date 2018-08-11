@@ -27,6 +27,36 @@ class GameScene: SKScene {
         initializeMenu()
         game = GameManager(scene : self)
         initializeGameView()
+        
+        // Swipe gesture recognizer
+        let swipeRight : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeR))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeL))
+        swipeLeft.direction = .left
+        view.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeU))
+        swipeUp.direction = .up
+        view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeD))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+    }
+    
+    @objc func swipeR() {
+        print("R")
+    }
+    @objc func swipeL() {
+        print("L")
+    }
+    @objc func swipeU() {
+        print("U")
+    }
+    @objc func swipeD() {
+        print("D")
     }
     
     
