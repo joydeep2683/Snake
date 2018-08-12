@@ -107,7 +107,12 @@ class GameManager {
                 scene.playerPosition[0].1 = 20
             }
         }
-        
-        
+    }
+    func swipe(ID : Int){
+        if !(ID == 1 && playerDirection == 2) && !(ID == 2 && playerDirection == 1){
+            if !(ID == 3 && playerDirection == 4) && !(ID == 4 && playerDirection == 3){
+                playerDirection = ID
+            }
+        }
     }
 }
