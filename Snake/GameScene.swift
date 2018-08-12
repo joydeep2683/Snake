@@ -20,6 +20,7 @@ class GameScene: SKScene {
     var playerPosition : [(Int, Int)] = []
     var gameBackGround : SKShapeNode!
     var gameArray : [(node : SKShapeNode, row: Int, column: Int)] = []
+    var scorePos : CGPoint?
     
     
         

@@ -24,6 +24,13 @@ class GameManager {
         scene.playerPosition.append((10, 11))
         scene.playerPosition.append((10, 12))
         renderChange()
+        generateNewPoint()
+    }
+    
+    private func generateNewPoint(){
+        let randomX = CGFloat(arc4random_uniform(19))
+        let randomY = CGFloat(arc4random_uniform(39))
+        scene.scorePos = CGPoint(x: randomX, y: randomY)
     }
     
     func renderChange(){
@@ -32,6 +39,12 @@ class GameManager {
                 node.fillColor = SKColor.cyan
             } else{
                 node.fillColor = SKColor.clear
+                
+                if scene.scorePos != nil {
+                    if Int((scene.scorePos?.x)!) == column && Int((scene.scorePos?.y)!) == row {
+                        node.fillColor = SKColor.red
+                    }
+                }
             }
         }
     }
